@@ -6,15 +6,13 @@ import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 @Provider
-public class ExceptionMapperProps implements ExceptionMapper<Throwable>{
+public class ExceptionMapperProps implements ExceptionMapper<DataNotFoundException>{
 	
-	public Response toResponse(Throwable ex){
-
-		if(ex instanceof DataNotFoundException){
-			return Response.status(Status.NOT_FOUND).entity(new ErrorProps("404", ex.getMessage())).build();
-		}else{
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(new ErrorProps("Some error code, 500 or somthing", ex.getMessage())).build();
-		}
+	public Response toResponse(DataNotFoundException ex)
+	{
+		return Response.status(Status.NOT_FOUND)
+				.entity(new ErrorProps("404", ex.getMessage()))
+				.build();
 	}
 
 }
